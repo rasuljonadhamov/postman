@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useQuery, useQueryClient } from "react-query";
-import api from "./services/api";
+
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "https://jsonplaceholder.typicode.com",
+});
 
 const ApiRequest = () => {
-  const { register, handleSubmit,  watch } = useForm();
+  const { register, handleSubmit, watch } = useForm();
   const queryClient = useQueryClient();
   const { data, isError } = useQuery("apiRequest", async () => {
     const response = await api.get("/posts/1");
@@ -18,7 +23,7 @@ const ApiRequest = () => {
 
       const response = await (method === "GET"
         ? api.get(url)
-        : api.post(url, { data: body })); 
+        : api.post(url, { data: body }));
       queryClient.setQueryData("apiRequest", response.data);
     } catch (error) {
       alert("Error making API request! Try again", error);
@@ -26,10 +31,10 @@ const ApiRequest = () => {
   };
 
   return (
-    <div className="bg-gray-900 p-8 shadow-md w-full mx-auto pt-16">
+    <div className=" p-8 mx-auto pt-16">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <label className="block text-white text-sm font-semibold mb-2">
+          <label className="block text-sm font-semibold mb-2">
             Request URL
             <span className="text-red-600"> ({useForm.method})</span>
           </label>
@@ -77,7 +82,7 @@ const ApiRequest = () => {
             </label>
             <textarea
               {...register("body")}
-              className="w-full h-44 p-2 bg-gray-800 rounded-md text-white"
+              className=" h-44 p-2 bg-gray-800 rounded-md text-white"
               placeholder="Enter request body (if applicable)"
             />
           </div>
@@ -87,9 +92,9 @@ const ApiRequest = () => {
         <p className="text-red-500 mt-4">Error during request! Try again</p>
       )}
       {data && (
-        <div className="mt-4 w-full h-full">
-          <h2 className="text-lg font-bold text-white mb-2">Response</h2>
-          <pre className="bg-gray-800 p-4 rounded-md overflow-auto text-white">
+        <div className="mt-4  overflow-y-hidden">
+          <h2 className="text-lg font-bold  mb-2">Response</h2>
+          <pre className="bg-gray-200 p-4 rounded-md overflow-auto">
             {JSON.stringify(data, null, 2)}
           </pre>
         </div>
