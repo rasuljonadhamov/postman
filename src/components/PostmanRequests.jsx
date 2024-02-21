@@ -6,18 +6,22 @@ function PostmanRequests() {
   const request = useSelector((state) =>
     state.requests?.find((re) => re.id === state.currentRequest)
   );
+
+  const handleChange = (e) => {
+    dispatch(
+      changeRequest({
+        id: request.id,
+        name: e.target.value,
+      })
+    );
+  };
+
   return (
     <input
-      onChange={(e) => {
-        dispatch(
-          changeRequest({
-            name: e.target.value,
-          })
-        );
-      }}
       id="request-input"
-      value={request?.name}
-      className="font-semibold"
+      onChange={handleChange}
+      value={request?.name || ""}
+      className="font-semibold p-1"
     />
   );
 }

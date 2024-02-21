@@ -32,7 +32,7 @@ const Requests = () => {
   };
 
   return (
-    <div className="bg-gray-100 border-r p-4">
+    <div className="bg-gray-100 border-r p-4 h-svh">
       <button onClick={addNewRequest} className="text-3xl text-slate-700">
         +
       </button>

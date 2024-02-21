@@ -16,6 +16,7 @@ const postmanSlice = createSlice({
     setCurrentRequest(state, { payload }) {
       state.currentRequest = payload;
     },
+
     changeRequest(state, { payload }) {
       const findCurrent = state.requests.find(
         (re) => re.id === state.currentRequest
@@ -27,6 +28,18 @@ const postmanSlice = createSlice({
         }
       }
     },
+
+    // changeRequest(state, { payload }) {
+    //   const findCurrent = state.requests.find(
+    //     (re) => re.id === state.currentRequest
+    //   );
+
+    //   if (findCurrent) {
+    //     for (const key in payload) {
+    //       findCurrent[key] = payload[key];
+    //     }
+    //   }
+    // },
   },
 });
 

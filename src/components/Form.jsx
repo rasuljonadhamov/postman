@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRequest } from "../store/postmanSlice";
+import useRequest from "../hooks/useRequest";
 
 const Form = () => {
   const dispatch = useDispatch();
+  const { sendRequest } = useRequest();
 
   const request = useSelector((state) =>
     state.requests?.find((re) => re.id === state.currentRequest)
@@ -20,12 +22,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (request.url) {
-      const res = await fetch(request?.url, {
-        method: request?.method || "GET",
-      });
-
-      const data = await res.json();
-      console.log(data, res);
+      sendRequest(request.url);
     }
   };
 
@@ -41,7 +38,7 @@ const Form = () => {
 
         <input
           type="text"
-          value={request?.url}
+          value={request?.url || ""}
           className="border-l  p-2 flex-1"
           placeholder="Enter a url or parse text "
           onChange={(e) =>
